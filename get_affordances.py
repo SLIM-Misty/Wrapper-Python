@@ -3,8 +3,6 @@ import mistyPy
 import os
 
 def log_misty_aff():
-    if os.path.exists("demofile.txt"):
-        os.remove('affordances.txt')
     with open('affordances.txt', 'w') as fp:
         for aff in dir(mistyPy.Robot):
             if aff[0] != '_':
