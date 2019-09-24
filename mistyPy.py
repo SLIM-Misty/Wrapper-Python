@@ -4,7 +4,7 @@ import threading
 import time
 import websocket
 try:
-    import thread
+    import _thread
 except ImportError:
     import _thread as thread
 from random import*
@@ -286,7 +286,7 @@ class Socket:
     def on_open(self,ws):
         def run(*args):
             self.ws.send(str(self.get_subscribe_message(self.Type)))
-        thread.start_new_thread(run, ())
+        _thread.start_new_thread(run, ())
 
     def unsubscribe(self):
         self.on_close(self.ws)
