@@ -47,9 +47,9 @@ class Robot:
     def battery(self):
         resp = requests.get('http://'+self.ip+'/api/battery')
         for reply in resp.json():
-        	return (reply['result'])
+        	return (reply)
 
-    def moveHead(self,roll,pitch,yaw,velocity=1):
+    def moveHead(self,roll,pitch,yaw,velocity=5):
         assert roll in range(-5,6) and pitch in range(-5,6) and yaw in range(-5,6), " moveHead: Roll, Pitch and Yaw needs to be in range -5 to +5"
         assert velocity in range(0,11), " moveHead: Velocity needs to be in range 0 to 10"
         requests.post('http://'+self.ip+'/api/head',json={"Pitch": pitch, "Roll": roll, "Yaw": yaw, "Velocity": velocity})
@@ -78,21 +78,23 @@ class Robot:
         self.images_saved = []
         resp = requests.get('http://'+self.ip+'/api/images/list')
         for reply in resp.json():
-            for out in reply["result"]:
-                self.images_saved.append(out["name"])
+            # # print(reply)
+            # for out in reply:
+            #     print("out: " ,out)
+            self.images_saved.append(reply)
 
     def populateAudio(self):
         self.audio_saved = []
         resp = requests.get('http://'+self.ip+'/api/audio/list')
         for reply in resp.json():
-            for out in reply["result"]:
-                self.audio_saved.append(out["name"])
+            # for out in reply["result"]:
+            self.audio_saved.append(reply)
 
     def populateLearnedFaces(self):
         self.faces_saved = []
         resp = requests.get('http://'+self.ip+'/api/faces')
         for reply in resp.json():
-            self.faces_saved = reply["result"]
+            self.faces_saved = reply
 
     def printImageList(self):
         print(self.images_saved)
